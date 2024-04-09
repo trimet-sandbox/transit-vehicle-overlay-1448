@@ -35,7 +35,7 @@ function getRectangleSize(zoom) {
 
   // Cap spriteWidth at 72 for zoom levels of 13 and beyond
   if (zoom >= 13) {
-    spriteWidth = 72;
+    spriteWidth = 60;
   }
 
   return [spriteWidth, spriteWidth]; // Assuming square icons for simplicity
