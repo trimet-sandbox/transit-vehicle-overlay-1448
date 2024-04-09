@@ -26,11 +26,16 @@ function getRectangleSize(zoom) {
   var specialPaths = ["/route/", "/vehicle/", "/planner-trip", "/stop/"];
   var pathname = window.location.pathname;
   var isSpecialPath = specialPaths.some((path) => pathname.includes(path));
-  console.log('isSpecialPath...?', isSpecialPath);
+  console.log("isSpecialPath...?", isSpecialPath);
   var spriteWidth = zoomToCorrectedWidth[zoom] || zoom;
 
   if (isSpecialPath) {
     spriteWidth *= 12; // Increase spriteWidth by 12 times for special paths
+  }
+
+  // Cap spriteWidth at 72 for zoom levels of 13 and beyond
+  if (zoom >= 13) {
+    spriteWidth = 72;
   }
 
   return [spriteWidth, spriteWidth]; // Assuming square icons for simplicity
