@@ -30,15 +30,14 @@ function getRectangleSize(zoom) {
   var spriteWidth = zoomToCorrectedWidth[zoom] || zoom;
 
   if (isSpecialPath) {
-    spriteWidth *= 12; // Increase spriteWidth by 12 times for special paths
+    spriteWidth *= 12;
   }
 
-  // Cap spriteWidth at 72 for zoom levels of 13 and beyond
-  if (zoom >= 13) {
+  if (zoom >= 13 && isSpecialPath) {
     spriteWidth = 60;
   }
 
-  return [spriteWidth, spriteWidth]; // Assuming square icons for simplicity
+  return [spriteWidth, spriteWidth];
 }
 
 export var LightRailVehicleRectangle = utils.makeRotatedMarker(
