@@ -41,7 +41,7 @@ export function renderAsImage(
     iconSize: size,
     iconAnchor: anchor,
     popupAnchor: pop,
-    tooltipAnchor: tt
+    tooltipAnchor: tt,
   });
   return retVal;
 }
@@ -85,14 +85,14 @@ export const makeBasicVehicleShape = (NormalShape, TrackedShape, getSize) => {
     isTracked: PropTypes.bool,
 
     /** map zoom: is part of the props due to redrawing this layer on map zoom */
-    zoom: PropTypes.number
+    zoom: PropTypes.number,
   };
 
   Shape.defaultProps = {
     color: "",
     highlightColor: "",
     isTracked: false,
-    zoom: null
+    zoom: null,
   };
 
   return Shape;
@@ -241,7 +241,7 @@ export function makeModeStyles(
     NormSC,
     TrackedSC,
     NormGond,
-    TrackedGond
+    TrackedGond,
   ];
 }
 
@@ -250,6 +250,7 @@ export function makeModeStyles(
  * and make the component render the icon with the size returned by the optional getSize function argument.
  */
 export const makeRotatedMarker = (Icon, getSize) => {
+  console.log("getSize", getSize);
   const VehicleMarker = ({
     children,
     color,
@@ -257,7 +258,7 @@ export const makeRotatedMarker = (Icon, getSize) => {
     isTracked,
     onVehicleClicked,
     vehicle,
-    zoom
+    zoom,
   }) => {
     if (!vehicle) {
       return null;
@@ -307,7 +308,7 @@ export const makeRotatedMarker = (Icon, getSize) => {
     vehicle: coreUtils.types.transitVehicleType.isRequired,
 
     /** map zoom: is part of the props due to redrawing this layer on map zoom */
-    zoom: PropTypes.number
+    zoom: PropTypes.number,
   };
 
   VehicleMarker.defaultProps = {
@@ -318,7 +319,7 @@ export const makeRotatedMarker = (Icon, getSize) => {
     onVehicleClicked: (vehicle, isTracked) => {
       linterIgnoreTheseProps(vehicle, isTracked);
     },
-    zoom: null
+    zoom: null,
   };
 
   return VehicleMarker;

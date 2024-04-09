@@ -19,24 +19,25 @@ import * as utils from "./utils";
  */
 
 function TransitVehicleOverlay(props) {
+  console.log("OTP-UI says hello");
   var center = props.center,
-      name = props.name,
-      selectedVehicle = props.selectedVehicle,
-      showOnlyTracked = props.showOnlyTracked,
-      symbols = props.symbols,
-      vehicleList = props.vehicleList,
-      visible = props.visible,
-      zoom = props.zoom,
-      color = props.color,
-      highlightColor = props.highlightColor,
-      onRecenterMap = props.onRecenterMap,
-      onVehicleClicked = props.onVehicleClicked,
-      PopupSlot = props.PopupSlot,
-      TooltipSlot = props.TooltipSlot,
-      highlight = props.highlight,
-      lowlight = props.lowlight,
-      lowlightColor = props.lowlightColor,
-      pattern = props.pattern;
+    name = props.name,
+    selectedVehicle = props.selectedVehicle,
+    showOnlyTracked = props.showOnlyTracked,
+    symbols = props.symbols,
+    vehicleList = props.vehicleList,
+    visible = props.visible,
+    zoom = props.zoom,
+    color = props.color,
+    highlightColor = props.highlightColor,
+    onRecenterMap = props.onRecenterMap,
+    onVehicleClicked = props.onVehicleClicked,
+    PopupSlot = props.PopupSlot,
+    TooltipSlot = props.TooltipSlot,
+    highlight = props.highlight,
+    lowlight = props.lowlight,
+    lowlightColor = props.lowlightColor,
+    pattern = props.pattern;
   utils.linterIgnoreTheseProps(name, visible, center); // Check if possibleColor is a string in format `#000` or `#000000`
 
   var isValidColor = function isValidColor(possibleColor) {
@@ -53,14 +54,17 @@ function TransitVehicleOverlay(props) {
    * and forwards to VehicleGeometry the relevant props from TransitVehicleOverlay.
    */
 
-
-  var makeVehicleGeometryWrapper = function makeVehicleGeometryWrapper(_Symbol) {
+  var makeVehicleGeometryWrapper = function makeVehicleGeometryWrapper(
+    _Symbol
+  ) {
     var VehicleGeometryWrapper = function VehicleGeometryWrapper(_ref) {
       var vehicle = _ref.entity,
-          renderZoom = _ref.zoom;
-      return /*#__PURE__*/React.createElement(VehicleGeometry, {
+        renderZoom = _ref.zoom;
+      return /*#__PURE__*/ React.createElement(VehicleGeometry, {
         color: isValidColor(vehicle.routeColor) ? vehicle.routeColor : color,
-        highlightColor: isValidColor(vehicle.highlightColor) ? vehicle.highlightColor : highlightColor,
+        highlightColor: isValidColor(vehicle.highlightColor)
+          ? vehicle.highlightColor
+          : highlightColor,
         isTracked: selectedVehicle && selectedVehicle.tripId === vehicle.tripId,
         MarkerSlot: _Symbol,
         onRecenterMap: onRecenterMap,
@@ -68,40 +72,50 @@ function TransitVehicleOverlay(props) {
         PopupSlot: PopupSlot,
         TooltipSlot: TooltipSlot,
         vehicle: vehicle,
-        zoom: renderZoom
+        zoom: renderZoom,
       });
     };
 
     VehicleGeometryWrapper.propTypes = {
       entity: coreUtils.types.transitVehicleType.isRequired,
-      zoom: PropTypes.number.isRequired
+      zoom: PropTypes.number.isRequired,
     };
     return VehicleGeometryWrapper;
   }; // when a vehicle is selected, pre-determine whether to show pattern and which vehicles
 
-
   var vl = vehicleList;
   var showPattern = false;
 
-  if (selectedVehicle && utils.findVehicleById(vehicleList, selectedVehicle.tripId)) {
+  if (
+    selectedVehicle &&
+    utils.findVehicleById(vehicleList, selectedVehicle.tripId)
+  ) {
     if (showOnlyTracked) vl = [selectedVehicle];
     if (pattern) showPattern = true;
   }
 
-  return /*#__PURE__*/React.createElement(FeatureGroup, null, vl && symbols && /*#__PURE__*/React.createElement(ZoomBasedMarkers, {
-    entities: vl,
-    symbols: symbols,
-    symbolTransform: makeVehicleGeometryWrapper,
-    zoom: zoom
-  }), showPattern && /*#__PURE__*/React.createElement(RouteGeometry, {
-    highlight: highlight,
-    highlightColor: highlightColor,
-    lowlight: lowlight,
-    lowlightColor: lowlightColor,
-    pattern: pattern,
-    selectedVehicle: selectedVehicle,
-    zoom: zoom
-  }));
+  return /*#__PURE__*/ React.createElement(
+    FeatureGroup,
+    null,
+    vl &&
+      symbols &&
+      /*#__PURE__*/ React.createElement(ZoomBasedMarkers, {
+        entities: vl,
+        symbols: symbols,
+        symbolTransform: makeVehicleGeometryWrapper,
+        zoom: zoom,
+      }),
+    showPattern &&
+      /*#__PURE__*/ React.createElement(RouteGeometry, {
+        highlight: highlight,
+        highlightColor: highlightColor,
+        lowlight: lowlight,
+        lowlightColor: lowlightColor,
+        pattern: pattern,
+        selectedVehicle: selectedVehicle,
+        zoom: zoom,
+      })
+  );
 }
 
 TransitVehicleOverlay.propTypes = {
@@ -163,7 +177,7 @@ TransitVehicleOverlay.propTypes = {
   highlight: RouteGeometry.propTypes.highlight,
 
   /** line styling options for the already traveled portion of the line geom */
-  lowlight: RouteGeometry.propTypes.lowlight
+  lowlight: RouteGeometry.propTypes.lowlight,
 };
 TransitVehicleOverlay.defaultProps = {
   name: "Real-time Buses and Trains",
@@ -173,13 +187,16 @@ TransitVehicleOverlay.defaultProps = {
   vehicleList: null,
   selectedVehicle: null,
   showOnlyTracked: false,
-  symbols: [{
-    minZoom: 0,
-    symbol: ModeCircles.Circle
-  }, {
-    minZoom: 14,
-    symbol: ModeCircles.CircledVehicle
-  }],
+  symbols: [
+    {
+      minZoom: 0,
+      symbol: ModeCircles.Circle,
+    },
+    {
+      minZoom: 14,
+      symbol: ModeCircles.CircledVehicle,
+    },
+  ],
   // VehicleGeometry defaults
   color: VehicleGeometry.defaultProps.color,
   highlightColor: VehicleGeometry.defaultProps.highlightColor,
@@ -192,8 +209,18 @@ TransitVehicleOverlay.defaultProps = {
   // highlightColor - VehicleGeometry see above
   lowlightColor: RouteGeometry.defaultProps.lowlightColor,
   highlight: RouteGeometry.defaultProps.highlight,
-  lowlight: RouteGeometry.defaultProps.lowlight
+  lowlight: RouteGeometry.defaultProps.lowlight,
 };
 export default TransitVehicleOverlay;
-export { CustomTooltip, ModeCircles, ModeRectangles, RotatedMarker, RouteGeometry, utils, VehicleGeometry, VehiclePopup, VehicleTooltip };
+export {
+  CustomTooltip,
+  ModeCircles,
+  ModeRectangles,
+  RotatedMarker,
+  RouteGeometry,
+  utils,
+  VehicleGeometry,
+  VehiclePopup,
+  VehicleTooltip,
+};
 //# sourceMappingURL=index.js.map
