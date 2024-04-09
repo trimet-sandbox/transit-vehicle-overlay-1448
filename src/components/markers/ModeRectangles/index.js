@@ -6,6 +6,7 @@ import * as utils from "../../../utils";
  * Used with rectangular vehicle shapes.
  */
 function getRectangleSize(zoom) {
+  console.log('getRectangleSize happening in ModeRectangles', window.location);
   const zoomToCorrectedWidth = {
     9: 2.7,
     10: 3.59,
@@ -25,6 +26,7 @@ function getRectangleSize(zoom) {
 
   return [spriteWidth, spriteWidth]; // Assuming square icons for simplicity
 }
+console.log('hello there', window.location);
 export const LightRailVehicleRectangle = utils.makeRotatedMarker(
   utils.makeBasicVehicleShape(
     StyledRectangle.LgShape,
