@@ -6,6 +6,7 @@ import * as utils from "../../../utils";
  */
 
 function getRectangleSize(zoom) {
+  console.log('getRectangleSize here for duty', window.location);
   var zoomToCorrectedWidth = {
     9: 2.7,
     10: 3.59,
