@@ -30,7 +30,7 @@ function getRectangleSize(zoom) {
   var spriteWidth = zoomToCorrectedWidth[zoom] || zoom;
 
   if (isSpecialPath) {
-    spriteWidth *= 20; // Increase spriteWidth by 20 times for special paths
+    spriteWidth *= 12; // Increase spriteWidth by 12 times for special paths
   }
 
   return [spriteWidth, spriteWidth]; // Assuming square icons for simplicity
