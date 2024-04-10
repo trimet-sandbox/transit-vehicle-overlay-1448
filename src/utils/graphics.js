@@ -250,7 +250,6 @@ export function makeModeStyles(
  * and make the component render the icon with the size returned by the optional getSize function argument.
  */
 export const makeRotatedMarker = (Icon, getSize) => {
-  console.log("getSize", getSize);
   const VehicleMarker = ({
     children,
     color,

@@ -6,8 +6,6 @@ import * as utils from "../../../utils";
  */
 
 function getRectangleSize(zoom) {
-  console.log("getRectangleSize here for duty", window.location);
-
   var zoomToCorrectedWidth = {
     9: 2.7,
     10: 3.59,
@@ -26,7 +24,6 @@ function getRectangleSize(zoom) {
   var specialPaths = ["/route/", "/vehicle/", "/planner-trip", "/stop/"];
   var pathname = window.location.pathname;
   var isSpecialPath = specialPaths.some((path) => pathname.includes(path));
-  console.log("isSpecialPath...?", isSpecialPath);
   var spriteWidth = zoomToCorrectedWidth[zoom] || zoom;
 
   if (isSpecialPath) {

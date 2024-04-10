@@ -19,7 +19,6 @@ import * as utils from "./utils";
  */
 
 function TransitVehicleOverlay(props) {
-  console.log("OTP-UI says hello");
   var center = props.center,
     name = props.name,
     selectedVehicle = props.selectedVehicle,
