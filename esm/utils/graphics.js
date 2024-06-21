@@ -19,11 +19,18 @@ import { linterIgnoreTheseProps } from "./data";
  */
 
 export function renderAsImage(icon) {
-  var size = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [22, 22];
-  var anchor = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
-  var pop = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : null;
-  var tt = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : null;
-  var cls = arguments.length > 5 && arguments[5] !== undefined ? arguments[5] : "";
+  var size =
+    arguments.length > 1 && arguments[1] !== undefined
+      ? arguments[1]
+      : [22, 22];
+  var anchor =
+    arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
+  var pop =
+    arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : null;
+  var tt =
+    arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : null;
+  var cls =
+    arguments.length > 5 && arguments[5] !== undefined ? arguments[5] : "";
   var x = size[0];
   var y = size[1]; // debugger;
 
@@ -36,7 +43,7 @@ export function renderAsImage(icon) {
     iconSize: size,
     iconAnchor: anchor,
     popupAnchor: pop,
-    tooltipAnchor: tt
+    tooltipAnchor: tt,
   });
   return retVal;
 }
@@ -59,22 +66,37 @@ export function setColor(color, obj) {
  * and optionally renders a size (number) prop determined by the optional getSize function argument.
  */
 
-export var makeBasicVehicleShape = function makeBasicVehicleShape(NormalShape, TrackedShape, getSize) {
+export var makeBasicVehicleShape = function makeBasicVehicleShape(
+  NormalShape,
+  TrackedShape,
+  getSize
+) {
   var Shape = function Shape(_ref) {
-    var color = _ref.color,
-        highlightColor = _ref.highlightColor,
-        isTracked = _ref.isTracked,
-        zoom = _ref.zoom;
+    var specialPaths = ["/route/", "/vehicle/", "/planner-trip", "/stop/"];
+    var pathname = window.location.pathname;
+    console.log("pathname: ", pathname);
+    let isSpecialPath = specialPaths.some((path) => pathname.includes(path));
+
+    console.log("ESM _ref:", _ref);
+    console.log("getSize is:", getSize);
+    console.log("isSpecialPath", isSpecialPath);
+    var color = isSpecialPath ? "#5cc3ff" : _ref.color,
+      highlightColor = _ref.highlightColor,
+      isTracked = _ref.isTracked,
+      zoom = _ref.zoom;
     var size = getSize && getSize(zoom);
-    return isTracked ? /*#__PURE__*/React.createElement(TrackedShape, {
-      color: color,
-      colorselected: highlightColor,
-      size: size
-    }) : /*#__PURE__*/React.createElement(NormalShape, {
-      color: color,
-      colorselected: highlightColor,
-      size: size
-    });
+    console.log("isTracked", isTracked, color);
+    return isTracked
+      ? /*#__PURE__*/ React.createElement(TrackedShape, {
+          color: color,
+          // colorselected: highlightColor,
+          size: size,
+        })
+      : /*#__PURE__*/ React.createElement(NormalShape, {
+          color: color,
+          // colorselected: highlightColor,
+          size: size,
+        });
   };
 
   Shape.propTypes = {
@@ -88,13 +110,13 @@ export var makeBasicVehicleShape = function makeBasicVehicleShape(NormalShape, T
     isTracked: PropTypes.bool,
 
     /** map zoom: is part of the props due to redrawing this layer on map zoom */
-    zoom: PropTypes.number
+    zoom: PropTypes.number,
   };
   Shape.defaultProps = {
     color: "",
     highlightColor: "",
     isTracked: false,
-    zoom: null
+    zoom: null,
   };
   return Shape;
 };
@@ -109,69 +131,87 @@ export var makeBasicVehicleShape = function makeBasicVehicleShape(NormalShape, T
  * @return marker object
  */
 
-export function makeVehicleIcon(Styled, mode, color, highlightColor, isTracked) {
+export function makeVehicleIcon(
+  Styled,
+  mode,
+  color,
+  highlightColor,
+  isTracked
+) {
   var icon;
 
   switch (mode) {
     case "TRAM":
-      icon = isTracked ? /*#__PURE__*/React.createElement(Styled.TrackedTram, {
-        color: color,
-        colorselected: highlightColor
-      }) : /*#__PURE__*/React.createElement(Styled.NormTram, {
-        color: color,
-        colorselected: highlightColor
-      });
+      icon = isTracked
+        ? /*#__PURE__*/ React.createElement(Styled.TrackedTram, {
+            color: color,
+            // colorselected: highlightColor,
+          })
+        : /*#__PURE__*/ React.createElement(Styled.NormTram, {
+            color: color,
+            // colorselected: highlightColor,
+          });
       break;
 
     case "SC":
-      icon = isTracked ? /*#__PURE__*/React.createElement(Styled.TrackedSC, {
-        color: color,
-        colorselected: highlightColor
-      }) : /*#__PURE__*/React.createElement(Styled.NormSC, {
-        color: color,
-        colorselected: highlightColor
-      });
+      icon = isTracked
+        ? /*#__PURE__*/ React.createElement(Styled.TrackedSC, {
+            color: color,
+            // colorselected: highlightColor,
+          })
+        : /*#__PURE__*/ React.createElement(Styled.NormSC, {
+            color: color,
+            // colorselected: highlightColor,
+          });
       break;
 
     case "GONDOLA":
-      icon = isTracked ? /*#__PURE__*/React.createElement(Styled.TrackedGond, {
-        color: color,
-        colorselected: highlightColor
-      }) : /*#__PURE__*/React.createElement(Styled.NormGond, {
-        color: color,
-        colorselected: highlightColor
-      });
+      icon = isTracked
+        ? /*#__PURE__*/ React.createElement(Styled.TrackedGond, {
+            color: color,
+            // colorselected: highlightColor,
+          })
+        : /*#__PURE__*/ React.createElement(Styled.NormGond, {
+            color: color,
+            // colorselected: highlightColor,
+          });
       break;
 
     case "RAIL":
     case "SUBWAY":
-      icon = isTracked ? /*#__PURE__*/React.createElement(Styled.TrackedRail, {
-        color: color,
-        colorselected: highlightColor
-      }) : /*#__PURE__*/React.createElement(Styled.NormRail, {
-        color: color,
-        colorselected: highlightColor
-      });
+      icon = isTracked
+        ? /*#__PURE__*/ React.createElement(Styled.TrackedRail, {
+            color: color,
+            // colorselected: highlightColor,
+          })
+        : /*#__PURE__*/ React.createElement(Styled.NormRail, {
+            color: color,
+            // colorselected: highlightColor,
+          });
       break;
 
     case "BUS":
-      icon = isTracked ? /*#__PURE__*/React.createElement(Styled.TrackedBus, {
-        color: color,
-        colorselected: highlightColor
-      }) : /*#__PURE__*/React.createElement(Styled.NormBus, {
-        color: color,
-        colorselected: highlightColor
-      });
+      icon = isTracked
+        ? /*#__PURE__*/ React.createElement(Styled.TrackedBus, {
+            color: color,
+            // colorselected: highlightColor,
+          })
+        : /*#__PURE__*/ React.createElement(Styled.NormBus, {
+            color: color,
+            // colorselected: highlightColor,
+          });
       break;
 
     default:
-      icon = isTracked ? /*#__PURE__*/React.createElement(Styled.TrackedShape, {
-        color: color,
-        colorselected: highlightColor
-      }) : /*#__PURE__*/React.createElement(Styled.Shape, {
-        color: color,
-        colorselected: highlightColor
-      });
+      icon = isTracked
+        ? /*#__PURE__*/ React.createElement(Styled.TrackedShape, {
+            color: color,
+            // colorselected: highlightColor,
+          })
+        : /*#__PURE__*/ React.createElement(Styled.Shape, {
+            color: color,
+            // colorselected: highlightColor,
+          });
       break;
   }
 
@@ -191,52 +231,71 @@ export function makeVehicleIcon(Styled, mode, color, highlightColor, isTracked) 
  * @return {array} - styled icon objects (two for each mode, ala tracked and normal styles)
  */
 
-export function makeModeStyles(normal, tracked, busIcon, railIcon, tramIcon, streetcarIcon, gondolaIcon) {
+export function makeModeStyles(
+  normal,
+  tracked,
+  busIcon,
+  railIcon,
+  tramIcon,
+  streetcarIcon,
+  gondolaIcon
+) {
   if (!railIcon) railIcon = busIcon;
   if (!tramIcon) tramIcon = railIcon;
   if (!streetcarIcon) streetcarIcon = railIcon;
   if (!gondolaIcon) gondolaIcon = busIcon;
   var NormBus = styled(busIcon).withConfig({
     displayName: "graphics__NormBus",
-    componentId: "sc-1q2itqx-0"
+    componentId: "sc-1q2itqx-0",
   })(["", ""], normal);
   var TrackedBus = styled(NormBus).withConfig({
     displayName: "graphics__TrackedBus",
-    componentId: "sc-1q2itqx-1"
+    componentId: "sc-1q2itqx-1",
   })(["", ""], tracked);
   var NormRail = styled(railIcon).withConfig({
     displayName: "graphics__NormRail",
-    componentId: "sc-1q2itqx-2"
+    componentId: "sc-1q2itqx-2",
   })(["", ""], normal);
   var TrackedRail = styled(NormRail).withConfig({
     displayName: "graphics__TrackedRail",
-    componentId: "sc-1q2itqx-3"
+    componentId: "sc-1q2itqx-3",
   })(["", ""], tracked);
   var NormTram = styled(tramIcon).withConfig({
     displayName: "graphics__NormTram",
-    componentId: "sc-1q2itqx-4"
+    componentId: "sc-1q2itqx-4",
   })(["", ""], normal);
   var TrackedTram = styled(NormTram).withConfig({
     displayName: "graphics__TrackedTram",
-    componentId: "sc-1q2itqx-5"
+    componentId: "sc-1q2itqx-5",
   })(["", ""], tracked);
   var NormSC = styled(streetcarIcon).withConfig({
     displayName: "graphics__NormSC",
-    componentId: "sc-1q2itqx-6"
+    componentId: "sc-1q2itqx-6",
   })(["", ""], normal);
   var TrackedSC = styled(NormSC).withConfig({
     displayName: "graphics__TrackedSC",
-    componentId: "sc-1q2itqx-7"
+    componentId: "sc-1q2itqx-7",
   })(["", ""], tracked);
   var NormGond = styled(gondolaIcon).withConfig({
     displayName: "graphics__NormGond",
-    componentId: "sc-1q2itqx-8"
+    componentId: "sc-1q2itqx-8",
   })(["", ""], normal);
   var TrackedGond = styled(NormGond).withConfig({
     displayName: "graphics__TrackedGond",
-    componentId: "sc-1q2itqx-9"
+    componentId: "sc-1q2itqx-9",
   })(["", ""], tracked);
-  return [NormBus, TrackedBus, NormRail, TrackedRail, NormTram, TrackedTram, NormSC, TrackedSC, NormGond, TrackedGond];
+  return [
+    NormBus,
+    TrackedBus,
+    NormRail,
+    TrackedRail,
+    NormTram,
+    TrackedTram,
+    NormSC,
+    TrackedSC,
+    NormGond,
+    TrackedGond,
+  ];
 }
 /**
  * Renders the provided Icon with a RotatedMarker component (for rendering rotated vehicle symbols)
@@ -246,37 +305,41 @@ export function makeModeStyles(normal, tracked, busIcon, railIcon, tramIcon, str
 export var makeRotatedMarker = function makeRotatedMarker(Icon, getSize) {
   var VehicleMarker = function VehicleMarker(_ref2) {
     var children = _ref2.children,
-        color = _ref2.color,
-        highlightColor = _ref2.highlightColor,
-        isTracked = _ref2.isTracked,
-        onVehicleClicked = _ref2.onVehicleClicked,
-        vehicle = _ref2.vehicle,
-        zoom = _ref2.zoom;
+      color = _ref2.color,
+      highlightColor = _ref2.highlightColor,
+      isTracked = _ref2.isTracked,
+      onVehicleClicked = _ref2.onVehicleClicked,
+      vehicle = _ref2.vehicle,
+      zoom = _ref2.zoom;
 
     if (!vehicle) {
       return null;
     }
 
     var lat = vehicle.lat,
-        lon = vehicle.lon,
-        heading = vehicle.heading;
-    var icon = /*#__PURE__*/React.createElement(Icon, {
+      lon = vehicle.lon,
+      heading = vehicle.heading;
+    var icon = /*#__PURE__*/ React.createElement(Icon, {
       color: color,
       highlightColor: highlightColor,
       isTracked: isTracked,
       routeType: vehicle.routeType,
-      zoom: zoom
+      zoom: zoom,
     });
-    return /*#__PURE__*/React.createElement(RotatedMarker, {
-      icon: renderAsImage(icon, getSize && getSize(zoom)),
-      position: [lat, lon],
-      rotationAngle: heading,
-      rotationOrigin: "center center",
-      onClick: function onClick() {
-        return onVehicleClicked(vehicle, isTracked);
+    return /*#__PURE__*/ React.createElement(
+      RotatedMarker,
+      {
+        icon: renderAsImage(icon, getSize && getSize(zoom)),
+        position: [lat, lon],
+        rotationAngle: heading,
+        rotationOrigin: "center center",
+        onClick: function onClick() {
+          return onVehicleClicked(vehicle, isTracked);
+        },
+        zIndexOffset: isTracked ? 1000 : 0,
       },
-      zIndexOffset: isTracked ? 1000 : 0
-    }, children);
+      children
+    );
   };
 
   VehicleMarker.propTypes = {
@@ -299,7 +362,7 @@ export var makeRotatedMarker = function makeRotatedMarker(Icon, getSize) {
     vehicle: coreUtils.types.transitVehicleType.isRequired,
 
     /** map zoom: is part of the props due to redrawing this layer on map zoom */
-    zoom: PropTypes.number
+    zoom: PropTypes.number,
   };
   VehicleMarker.defaultProps = {
     children: null,
@@ -309,7 +372,7 @@ export var makeRotatedMarker = function makeRotatedMarker(Icon, getSize) {
     onVehicleClicked: function onVehicleClicked(vehicle, isTracked) {
       linterIgnoreTheseProps(vehicle, isTracked);
     },
-    zoom: null
+    zoom: null,
   };
   return VehicleMarker;
 };

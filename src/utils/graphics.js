@@ -66,6 +66,7 @@ export function setColor(color, obj) {
  */
 export const makeBasicVehicleShape = (NormalShape, TrackedShape, getSize) => {
   const Shape = ({ color, highlightColor, isTracked, zoom }) => {
+    console.log('src Shape color: ', color);
     const size = getSize && getSize(zoom);
     return isTracked ? (
       <TrackedShape color={color} colorselected={highlightColor} size={size} />

@@ -4,14 +4,13 @@ import { Bus, Rail, BusRect, RailRect } from "./images";
 import * as utils from "../../../utils";
 var blue = "#28639c";
 var defColor = blue;
-var defSelected = "#00bfff";
 export var tracked = css([".rail_blue,.bus_blue{fill:", ";}"], function (props) {
-  return props.colorselected || defSelected;
+  return props.colorselected;
 });
 export var normal = css([".rail_blue,.bus_blue{fill:", ";}background-color:transparent;:hover{.rail_blue,.bus_blue{fill:", ";}}"], function (props) {
   return props.color || defColor;
 }, function (props) {
-  return props.colorselected || defSelected;
+  return props.colorselected;
 });
 export var Shape = styled(BusRect).withConfig({
   displayName: "styled__Shape",
