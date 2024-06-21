@@ -74,27 +74,20 @@ export var makeBasicVehicleShape = function makeBasicVehicleShape(
   var Shape = function Shape(_ref) {
     var specialPaths = ["/route/", "/vehicle/", "/planner-trip", "/stop/"];
     var pathname = window.location.pathname;
-    console.log("pathname: ", pathname);
     let isSpecialPath = specialPaths.some((path) => pathname.includes(path));
 
-    console.log("ESM _ref:", _ref);
-    console.log("getSize is:", getSize);
-    console.log("isSpecialPath", isSpecialPath);
     var color = isSpecialPath ? "#5cc3ff" : _ref.color,
       highlightColor = _ref.highlightColor,
       isTracked = _ref.isTracked,
       zoom = _ref.zoom;
     var size = getSize && getSize(zoom);
-    console.log("isTracked", isTracked, color);
     return isTracked
       ? /*#__PURE__*/ React.createElement(TrackedShape, {
           color: color,
-          // colorselected: highlightColor,
           size: size,
         })
       : /*#__PURE__*/ React.createElement(NormalShape, {
           color: color,
-          // colorselected: highlightColor,
           size: size,
         });
   };
@@ -145,11 +138,9 @@ export function makeVehicleIcon(
       icon = isTracked
         ? /*#__PURE__*/ React.createElement(Styled.TrackedTram, {
             color: color,
-            // colorselected: highlightColor,
           })
         : /*#__PURE__*/ React.createElement(Styled.NormTram, {
             color: color,
-            // colorselected: highlightColor,
           });
       break;
 
@@ -157,11 +148,9 @@ export function makeVehicleIcon(
       icon = isTracked
         ? /*#__PURE__*/ React.createElement(Styled.TrackedSC, {
             color: color,
-            // colorselected: highlightColor,
           })
         : /*#__PURE__*/ React.createElement(Styled.NormSC, {
             color: color,
-            // colorselected: highlightColor,
           });
       break;
 
@@ -169,11 +158,9 @@ export function makeVehicleIcon(
       icon = isTracked
         ? /*#__PURE__*/ React.createElement(Styled.TrackedGond, {
             color: color,
-            // colorselected: highlightColor,
           })
         : /*#__PURE__*/ React.createElement(Styled.NormGond, {
             color: color,
-            // colorselected: highlightColor,
           });
       break;
 
@@ -182,11 +169,9 @@ export function makeVehicleIcon(
       icon = isTracked
         ? /*#__PURE__*/ React.createElement(Styled.TrackedRail, {
             color: color,
-            // colorselected: highlightColor,
           })
         : /*#__PURE__*/ React.createElement(Styled.NormRail, {
             color: color,
-            // colorselected: highlightColor,
           });
       break;
 
@@ -194,11 +179,9 @@ export function makeVehicleIcon(
       icon = isTracked
         ? /*#__PURE__*/ React.createElement(Styled.TrackedBus, {
             color: color,
-            // colorselected: highlightColor,
           })
         : /*#__PURE__*/ React.createElement(Styled.NormBus, {
             color: color,
-            // colorselected: highlightColor,
           });
       break;
 
@@ -206,11 +189,9 @@ export function makeVehicleIcon(
       icon = isTracked
         ? /*#__PURE__*/ React.createElement(Styled.TrackedShape, {
             color: color,
-            // colorselected: highlightColor,
           })
         : /*#__PURE__*/ React.createElement(Styled.Shape, {
             color: color,
-            // colorselected: highlightColor,
           });
       break;
   }

@@ -6,7 +6,6 @@ import * as utils from "../../../utils";
  */
 
 function getRectangleSize(zoom) {
-  console.log("wtsigma zoom:", zoom);
   var zoomToCorrectedWidth = {
     9: 2.7,
     10: 3.59,
@@ -25,18 +24,22 @@ function getRectangleSize(zoom) {
   var specialPaths = ["/route/", "/vehicle/", "/planner-trip", "/stop/"];
   var pathname = window.location.pathname;
   var isSpecialPath = specialPaths.some((path) => pathname.includes(path));
-  var spriteWidth = zoomToCorrectedWidth[zoom] || zoom;
-  console.log("spriteWidth", spriteWidth);
+  let spriteWidth;
+
   if (isSpecialPath) {
-    console.log("its a special path");
-    spriteWidth *= 12;
+    const veryCloseZoom = 19;
+    const closeZoom = 14;
+    const farZoom = 10;
+
+    spriteWidth = zoom;
+    if (zoom >= veryCloseZoom) spriteWidth = zoom * 3;
+    else if (zoom >= closeZoom) spriteWidth = zoom * 2 + 3;
+    else if (zoom > farZoom) spriteWidth = zoom + 6;
+
+  } else {
+    spriteWidth = zoomToCorrectedWidth[zoom] || zoom;
   }
 
-  if (zoom >= 13 && isSpecialPath) {
-    console.log("pour me something tall and strong");
-    spriteWidth = 60;
-  }
-  console.log("will return", [spriteWidth, spriteWidth]);
   return [spriteWidth, spriteWidth];
 }
 

@@ -6,7 +6,6 @@ import * as utils from "../../../utils";
  * Used with rectangular vehicle shapes.
  */
 function getRectangleSize(zoom) {
-  console.log('getRectangleSize running with zoom: ', zoom);
   const zoomToCorrectedWidth = {
     9: 2.7,
     10: 3.59,
